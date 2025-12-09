@@ -34,3 +34,11 @@ test('login user can not sign in', function () {
     ]);
     $response->assertFound();
 });
+
+test('guest user can not sign in when the user is not exists before', function () {
+    $response = postJson(route('auth.sign-in'), [
+        'email' => 'milwad@gmail.com',
+        'password' => 'password',
+    ]);
+    $response->assertUnprocessable();
+});
