@@ -31,6 +31,22 @@ test('login user can store new task without assign', function () {
     assertDatabaseCount('tasks', 1);
 });
 
+test('store task validation work correctly', function () {
+    $user = User::factory()->create();
+
+    $response = actingAs($user)->postJson(route('tasks.store'), []);
+    $response->assertUnprocessable();
+    $response->assertOnlyJsonValidationErrors([
+        'title',
+        'status',
+        'description',
+        'due_date',
+    ]);
+
+    // DB Assertions
+    assertDatabaseCount('tasks', 0);
+});
+
 test('login user can store new task with assign', function () {
     $user = User::factory()->create();
 
