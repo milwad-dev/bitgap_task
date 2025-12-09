@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,3 +11,4 @@ Route::get('/user', function (Request $request) {
 
 // SignUp
 Route::post('sign-up', SignUpController::class)->middleware('guest:sanctum');
+Route::post('sign-in', SignInController::class)->middleware('guest:sanctum');
