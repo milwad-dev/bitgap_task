@@ -48,3 +48,9 @@ test('guest user can not sign up when the user is exists before', function () {
     ]);
     $response->assertUnprocessable();
 });
+
+test('sign up validation work correctly', function () {
+    $response = postJson(route('auth.sign-up'), []);
+    $response->assertUnprocessable();
+    $response->assertJsonValidationErrors(['name', 'email', 'password']);
+});
