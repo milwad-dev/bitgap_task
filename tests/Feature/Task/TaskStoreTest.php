@@ -31,6 +31,33 @@ test('login user can store new task without assign', function () {
     assertDatabaseCount('tasks', 1);
 });
 
+test('login user can store new task with assign', function () {
+    $user = User::factory()->create();
+
+    $response = actingAs($user)->postJson(route('tasks.store'), [
+        'title' => 'Task Title',
+        'status' => TaskStatusEnum::STATUS_PENDING->value,
+        'description' => 'Task DESC',
+        'due_date' => now()->addDays(30)->format('Y-m-d'),
+        'assigned_id' => User::factory()->create(['email' => 'assign@gmail.com'])->getKey(),
+    ]);
+    $response->assertSuccessful();
+    $response->assertJsonStructure([
+        'data' => [
+            'id',
+            'title',
+            'status',
+            'description',
+            'due_date',
+            'user',
+            'assigned',
+        ],
+    ]);
+
+    // DB Assertions
+    assertDatabaseCount('tasks', 1);
+});
+
 test('guest user can not store new task without assign', function () {
     $response = postJson(route('tasks.store'), [
         'title' => 'Task Title',
