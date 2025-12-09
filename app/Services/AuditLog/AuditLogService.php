@@ -16,7 +16,7 @@ class AuditLogService
             'user_id' => auth()->id(),
             'action' => $action,
             'ip_address' => request()->ip(),
-            'model' => get_class($model),
+            'model' => $model ? get_class($model) : null,
             'model_id' => $model?->getKey(),
             'changes' => $changes,
         ]);
