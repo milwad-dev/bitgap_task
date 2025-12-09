@@ -36,6 +36,7 @@ test('login user can update new task without assign', function () {
     assertDatabaseCount('tasks', 1);
     assertDatabaseHas('tasks', ['title' => 'NEW TASK TITLE']);
     assertDatabaseMissing('tasks', ['title' => 'OLD TASK TITLE']);
+    assertDatabaseCount('audit_logs', 2);
 });
 
 test('update task validation work correctly', function () {
@@ -54,6 +55,7 @@ test('update task validation work correctly', function () {
     // DB Assertions
     assertDatabaseCount('tasks', 1);
     assertDatabaseHas('tasks', ['title' => 'OLD TASK TITLE']);
+    assertDatabaseCount('audit_logs', 1);
 });
 
 test('login user can update new task with assign', function () {
@@ -84,6 +86,7 @@ test('login user can update new task with assign', function () {
     assertDatabaseCount('tasks', 1);
     assertDatabaseHas('tasks', ['title' => 'NEW TASK TITLE']);
     assertDatabaseMissing('tasks', ['title' => 'OLD TASK TITLE']);
+    assertDatabaseCount('audit_logs', 2);
 });
 
 test('guest user can not update new task without assign', function () {
@@ -99,7 +102,7 @@ test('guest user can not update new task without assign', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 1);
-
     assertDatabaseMissing('tasks', ['title' => 'NEW TASK TITLE']);
     assertDatabaseHas('tasks', ['title' => 'OLD TASK TITLE']);
+    assertDatabaseCount('audit_logs', 1);
 });

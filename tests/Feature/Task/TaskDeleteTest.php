@@ -16,6 +16,7 @@ test('login user can delete task', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 0);
+    assertDatabaseCount('audit_logs', 2);
 });
 
 test('guest user can not delete task', function () {
@@ -26,4 +27,5 @@ test('guest user can not delete task', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 1);
+    assertDatabaseCount('audit_logs', 1);
 });
