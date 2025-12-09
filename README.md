@@ -17,6 +17,7 @@ It demonstrates clean architecture, API design, SOLID principles, testing struct
 - Swagger
 - Tests CI
 - Laravel Pint
+- PHPStan
 
 ---
 
