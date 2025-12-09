@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  app:
+    container_name: bitgap_app
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: bitgap
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234554321
+    networks:
+      - bitgap_network
+    volumes:
+      - .:/var/www/html/
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    container_name: bitgap_nginx
+    image: nginx:stable
+    ports:
+      - "8080:80"
+    networks:
+      - bitgap_network
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  db:
+    container_name: bitgap_db
+    image: postgres:18-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgres/data
+    networks:
+      - bitgap_network
+    environment:
+      POSTGRES_DB: bitgap
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234554321
+
+  redis:
+    container_name: bitgap_redis
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - bitgap_network
+
+networks:
+  bitgap_network:
+
+volumes:
+  db-data:
+
