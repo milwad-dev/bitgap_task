@@ -15,7 +15,7 @@ RUN pecl install xdebug \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Copy Xdebug config
-COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Set workdir
 WORKDIR /var/www/html
