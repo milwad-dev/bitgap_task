@@ -28,6 +28,7 @@ return [
         '#^sanctum#',
         '#^_ignition#',
         '#^_tt#',
+        '#^api/swagger#',
     ],
 
     'hide_meta_data' => false,
