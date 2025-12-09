@@ -92,6 +92,22 @@ make down
 
 ---
 
+## 📘 API Documentation (Swagger)
+
+This project provides Swagger documentation, which helps you explore API endpoints, request/response structures, and overall functionality.
+
+### 🚀 Accessing Swagger UI
+
+After running the service, Swagger UI can be accessed at:
+
+```bash
+http://localhost:8080/api/swagger
+```
+
+> The Swagger documentation is automatically generated from your code annotations, so it always stays up-to-date with the implemented endpoints.
+
+---
+
 ## 🧪 Running Tests
 
 Run the automated test suite:
