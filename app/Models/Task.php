@@ -24,6 +24,13 @@ class Task extends Model
         'assigned_id',
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var string[]
+     */
+    protected $with = ['user'];
+
     // Relations
 
     /**
