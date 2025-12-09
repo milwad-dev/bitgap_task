@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
+use App\Http\Controllers\Task\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,8 @@ Route::post('sign-in', SignInController::class)
     ->name('auth.sign-in')
     ->middleware('guest:sanctum');
 
-// Role-Permission
 Route::middleware('auth:sanctum')->group(function ($router) {
+    // Role-Permission
     $router->get('role-permissions', [RolePermissionController::class, 'index'])
         ->name('role-permissions.index');
 
@@ -35,4 +36,7 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     $router->delete('role-permissions/{id}', [RolePermissionController::class, 'destroy'])
         ->where('role', '[0-9]+')
         ->name('role-permissions.destroy');
+
+    // Task
+    $router->apiResource('tasks', TaskController::class);
 });
