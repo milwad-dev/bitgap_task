@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
@@ -22,6 +23,9 @@ Route::post('sign-in', SignInController::class)
     ->middleware('guest:sanctum');
 
 Route::middleware('auth:sanctum')->group(function ($router) {
+    // Logout
+    $router->post('logout', LogoutController::class)->name('auth.logout');
+
     // Role-Permission
     $router->get('role-permissions', [RolePermissionController::class, 'index'])
         ->name('role-permissions.index');
