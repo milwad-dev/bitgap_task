@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Observers\Task\TaskObserver;
 use App\Policies\Task\TaskPolicy;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[UsePolicy(TaskPolicy::class)]
+#[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */

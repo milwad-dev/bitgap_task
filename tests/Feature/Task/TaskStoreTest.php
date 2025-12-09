@@ -30,6 +30,7 @@ test('login user can store new task without assign', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 1);
+    assertDatabaseCount('audit_logs', 1);
 });
 
 test('store task validation work correctly', function () {
@@ -46,6 +47,7 @@ test('store task validation work correctly', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 0);
+    assertDatabaseCount('audit_logs', 0);
 });
 
 test('login user can store new task with assign', function () {
@@ -73,6 +75,7 @@ test('login user can store new task with assign', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 1);
+    assertDatabaseCount('audit_logs', 1);
 });
 
 test('guest user can not store new task without assign', function () {
@@ -86,4 +89,5 @@ test('guest user can not store new task without assign', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 0);
+    assertDatabaseCount('audit_logs', 0);
 });
