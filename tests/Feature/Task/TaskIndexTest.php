@@ -1,12 +1,14 @@
 <?php
 
+use App\Models\Task;
 use App\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\getJson;
 
 test('login user can see tasks index', function () {
     $user = User::factory()->create();
-    \App\Models\Task::factory(10)->create();
+    Task::factory(5)->create(['user_id' => $user->getKey()]);
+    Task::factory(5)->create(['assigned_id' => $user->getKey()]);
 
     $response = actingAs($user)->getJson(route('tasks.index'));
     $response->assertOk();
