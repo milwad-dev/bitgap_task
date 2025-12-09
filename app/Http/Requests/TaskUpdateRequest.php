@@ -26,7 +26,7 @@ class TaskUpdateRequest extends FormRequest
             'status' => ['required', new Enum(TaskStatusEnum::class)],
             'description' => ['required', 'string', 'min:3'],
             'due_date' => ['required', 'date', 'after:today', 'date_format:Y-m-d'],
-            'assigned_id' => ['required', 'numeric', 'exists:users,id'],
+            'assigned_id' => ['nullable', 'numeric', 'exists:users,id'],
         ];
     }
 }
