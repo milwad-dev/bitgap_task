@@ -10,5 +10,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // SignUp
-Route::post('sign-up', SignUpController::class)->middleware('guest:sanctum');
-Route::post('sign-in', SignInController::class)->middleware('guest:sanctum');
+Route::post('sign-up', SignUpController::class)
+    ->name('auth.sign-up')
+    ->middleware('guest:sanctum');
+
+// SignIn
+Route::post('sign-in', SignInController::class)
+    ->name('auth.sign-in')
+    ->middleware('guest:sanctum');
