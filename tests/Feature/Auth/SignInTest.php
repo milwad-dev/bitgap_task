@@ -42,3 +42,9 @@ test('guest user can not sign in when the user is not exists before', function (
     ]);
     $response->assertUnprocessable();
 });
+
+test('sign in validation work correctly', function () {
+    $response = postJson(route('auth.sign-in'), []);
+    $response->assertUnprocessable();
+    $response->assertJsonValidationErrors(['email', 'password']);
+});
