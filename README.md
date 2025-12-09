@@ -116,7 +116,7 @@ docker/
 ### Key Folders
 
 * **app/Http/Controllers** — business logic layer
-* **routes/** — API and web route definitions
+* **routes/** — API route definitions
 * **tests/** — unit & feature tests
 * **docker/** — Docker configuration files
 
