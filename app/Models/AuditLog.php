@@ -25,6 +25,13 @@ class AuditLog extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var string[]
+     */
+    protected $with = ['user'];
+
+    /**
      * Get the attributes that should be cast.
      */
     protected function casts(): array
