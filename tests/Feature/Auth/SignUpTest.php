@@ -27,3 +27,15 @@ test('guest user can sign up', function () {
     // DB Assertions
     assertDatabaseCount('users', 1);
 });
+
+test('login user can not sign up', function () {
+    $user = User::factory()->create(['password' => Hash::make('password')]);
+
+    $response = actingAs($user, 'sanctum')->postJson(route('auth.sign-up'), [
+        'name' => 'Milwad Khosravi',
+        'email' => 'milwad@gmail.com',
+        'password' => 'Milwad123!',
+    ]);
+    $response->assertFound();
+});
+
