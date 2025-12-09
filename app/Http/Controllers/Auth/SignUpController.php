@@ -27,7 +27,7 @@ class SignUpController extends Controller
             'status' => 'success',
             'data' => [
                 'token' => $token,
-                'user'  => new UserResource($user),
+                'user' => new UserResource($user),
             ],
         ]);
     }
