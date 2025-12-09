@@ -39,3 +39,12 @@ test('login user can not sign up', function () {
     $response->assertFound();
 });
 
+test('guest user can not sign up when the user is exists before', function () {
+    $user = User::factory()->create(['password' => Hash::make('Milwad123!')]);
+
+    $response = postJson(route('auth.sign-up'), [
+        'email' => $user->email,
+        'password' => 'Milwad123!',
+    ]);
+    $response->assertUnprocessable();
+});
