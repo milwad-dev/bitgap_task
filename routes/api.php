@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
@@ -43,4 +44,7 @@ Route::middleware('auth:sanctum')->group(function ($router) {
 
     // Task
     $router->apiResource('tasks', TaskController::class);
+
+    // AuditLog
+    $router->get('audit-logs', AuditLogController::class)->name('audit-logs.index');
 });
