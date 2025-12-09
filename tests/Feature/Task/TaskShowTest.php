@@ -7,7 +7,7 @@ use function Pest\Laravel\getJson;
 
 test('login user can see single task', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create();
+    $task = Task::factory()->create(['user_id' => $user->getKey()]);
 
     $response = actingAs($user)->getJson(route('tasks.show', $task->getKey()));
     $response->assertOk();

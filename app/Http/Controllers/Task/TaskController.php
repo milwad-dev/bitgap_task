@@ -9,7 +9,6 @@ use App\Http\Resources\Task\TaskResource;
 use App\Models\Permission;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TaskController extends Controller
@@ -20,7 +19,7 @@ class TaskController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $tasks = Task::query()
-            ->when(auth()->user()->hasAnyPermission(Permission::PERMISSION_SUPER_ADMIN, Permission::PERMISSION_TASK_VIEW), function ($query) {
+            ->unless(auth()->user()->hasAnyPermission(Permission::PERMISSION_SUPER_ADMIN, Permission::PERMISSION_TASK_VIEW), function ($query) {
                 $query
                     ->where('user_id', auth()->id())
                     ->orWhere('assigned_to', auth()->id());
@@ -53,6 +52,8 @@ class TaskController extends Controller
      */
     public function show(Task $task): TaskResource
     {
+        $this->authorize('view', $task);
+
         return new TaskResource($task);
     }
 
@@ -61,6 +62,8 @@ class TaskController extends Controller
      */
     public function update(TaskUpdateRequest $request, Task $task): TaskResource
     {
+        $this->authorize('update', $task);
+
         $task->update([
             'title' => $request->title,
             'status' => $request->status,
@@ -77,6 +80,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): JsonResponse
     {
+        $this->authorize('delete', $task);
+
         $task->delete();
 
         return response()->json(null, 204);

@@ -8,7 +8,7 @@ use function Pest\Laravel\deleteJson;
 
 test('login user can delete task', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create();
+    $task = Task::factory()->create(['user_id' => $user->getKey()]);
 
     $response = actingAs($user)->deleteJson(route('tasks.destroy', $task->getKey()));
     $response->assertNoContent();

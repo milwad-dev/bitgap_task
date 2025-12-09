@@ -11,7 +11,7 @@ use function Pest\Laravel\patchJson;
 
 test('login user can update new task without assign', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create(['title' => 'OLD TASK TITLE']);
+    $task = Task::factory()->create(['title' => 'OLD TASK TITLE', 'user_id' => $user->getKey()]);
 
     $response = actingAs($user)->patchJson(route('tasks.update', $task->getKey()), [
         'title' => 'NEW TASK TITLE',
@@ -39,7 +39,7 @@ test('login user can update new task without assign', function () {
 
 test('update task validation work correctly', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create(['title' => 'OLD TASK TITLE']);
+    $task = Task::factory()->create(['title' => 'OLD TASK TITLE', 'user_id' => $user->getKey()]);
 
     $response = actingAs($user)->patchJson(route('tasks.update', $task->getKey()), []);
     $response->assertUnprocessable();
@@ -57,7 +57,7 @@ test('update task validation work correctly', function () {
 
 test('login user can update new task with assign', function () {
     $user = User::factory()->create();
-    $task = Task::factory()->create(['title' => 'OLD TASK TITLE']);
+    $task = Task::factory()->create(['title' => 'OLD TASK TITLE', 'assigned_id' => $user->getKey()]);
 
     $response = actingAs($user)->patchJson(route('tasks.update', $task->getKey()), [
         'title' => 'NEW TASK TITLE',
