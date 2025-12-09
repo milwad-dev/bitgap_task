@@ -38,7 +38,7 @@ services:
   db:
     container_name: bitgap_db
     image: postgres:18-alpine
-    restart: unless-stopped
+    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -53,7 +53,7 @@ services:
   redis:
     container_name: bitgap_redis
     image: redis:alpine
-    restart: unless-stopped
+    restart: always
     ports:
       - "6379:6379"
     networks:
