@@ -15,12 +15,12 @@ Route::get('/user', function (Request $request) {
 // SignUp
 Route::post('sign-up', SignUpController::class)
     ->name('auth.sign-up')
-    ->middleware('guest:sanctum');
+    ->middleware(['guest:sanctum', 'throttle:4,1']);
 
 // SignIn
 Route::post('sign-in', SignInController::class)
     ->name('auth.sign-in')
-    ->middleware('guest:sanctum');
+    ->middleware(['guest:sanctum', 'throttle:4,1']);
 
 Route::middleware('auth:sanctum')->group(function ($router) {
     // Logout
