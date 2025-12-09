@@ -10,6 +10,7 @@ use App\Models\Permission;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class TaskController extends Controller
 {
@@ -18,14 +19,16 @@ class TaskController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $tasks = Task::query()
-            ->unless(auth()->user()->hasAnyPermission(Permission::PERMISSION_SUPER_ADMIN, Permission::PERMISSION_TASK_VIEW), function ($query) {
-                $query
-                    ->where('user_id', auth()->id())
-                    ->orWhere('assigned_id', auth()->id());
-            })
-            ->latest()
-            ->get();
+        $tasks = Cache::remember(sprintf('tasks-%s', auth()->id()), now()->addDay(), function () {
+            return Task::query()
+                ->unless(auth()->user()->hasAnyPermission(Permission::PERMISSION_SUPER_ADMIN, Permission::PERMISSION_TASK_VIEW), function ($query) {
+                    $query
+                        ->where('user_id', auth()->id())
+                        ->orWhere('assigned_id', auth()->id());
+                })
+                ->latest()
+                ->get();
+        });
 
         return TaskResource::collection($tasks);
     }
