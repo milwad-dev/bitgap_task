@@ -8,12 +8,12 @@ use function Pest\Laravel\postJson;
 
 test('login user can store new role', function () {
     $user = User::factory()->create();
-    Permission::query()->create(['name' => Permission::PERMISSION_TASK_VIEW]);
-    Permission::query()->create(['name' => Permission::PERMISSION_TASK_CREATE]);
+    $permission1 = Permission::query()->create(['name' => Permission::PERMISSION_TASK_VIEW]);
+    $permission2 = Permission::query()->create(['name' => Permission::PERMISSION_TASK_CREATE]);
 
     $response = actingAs($user)->postJson(route('role-permissions.store', [
         'name' => 'NEW ROLE',
-        'permissions' => [1, 2]
+        'permissions' => [$permission1->getKey(), $permission2->getKey()],
     ]));
     $response->assertCreated();
 
