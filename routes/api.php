@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\AuditLog\AuditLogController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
