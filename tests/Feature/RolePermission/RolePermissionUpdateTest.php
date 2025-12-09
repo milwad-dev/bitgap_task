@@ -12,12 +12,12 @@ use function Pest\Laravel\patchJson;
 test('login user can update role', function () {
     $user = User::factory()->create();
     $role = Role::factory()->create(['name' => 'OLD ROLE']);
-    Permission::query()->create(['name' => Permission::PERMISSION_TASK_VIEW]);
-    Permission::query()->create(['name' => Permission::PERMISSION_TASK_CREATE]);
+    $permission1 = Permission::query()->create(['name' => Permission::PERMISSION_TASK_VIEW]);
+    $permission2 = Permission::query()->create(['name' => Permission::PERMISSION_TASK_CREATE]);
 
     $response = actingAs($user)->patchJson(route('role-permissions.update', $role->getKey()), [
         'name' => 'NEW ROLE',
-        'permissions' => [1, 2]
+        'permissions' => [$permission1->getKey(), $permission2->getKey()],
     ]);
     $response->assertOk();
 
@@ -32,7 +32,7 @@ test('guest user can not update role', function () {
 
     $response = patchJson(route('role-permissions.update', $role->getKey(), [
         'name' => 'NEW ROLE',
-        'permissions' => [1, 2]
+        'permissions' => [1, 2],
     ]));
     $response->assertUnauthorized();
 
