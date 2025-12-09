@@ -7,6 +7,7 @@ use App\Http\Requests\RolePermission\RoleStoreRequest;
 use App\Http\Requests\RolePermission\RoleUpdateRequest;
 use App\Http\Resources\RolePermission\RoleResource;
 use App\Models\Role;
+use Illuminate\Support\Facades\Cache;
 
 class RolePermissionController extends Controller
 {
@@ -15,7 +16,9 @@ class RolePermissionController extends Controller
      */
     public function index()
     {
-        $roles = Role::query()->latest()->paginate();
+        $roles = Cache::remember('roles', now()->addDay(), function () {
+            return Role::query()->latest()->paginate();
+        });
 
         return RoleResource::collection($roles);
     }
