@@ -14,11 +14,8 @@ test('login user can see audit logs index', function () {
     $response->assertJsonStructure([
         'data' => [
             [
-                'user' => [
-                    'id',
-                    'name',
-                    'email',
-                ],
+                'id',
+                'user',
                 'ip_address',
                 'action',
                 'model',
