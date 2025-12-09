@@ -22,7 +22,7 @@ class TaskController extends Controller
             ->unless(auth()->user()->hasAnyPermission(Permission::PERMISSION_SUPER_ADMIN, Permission::PERMISSION_TASK_VIEW), function ($query) {
                 $query
                     ->where('user_id', auth()->id())
-                    ->orWhere('assigned_to', auth()->id());
+                    ->orWhere('assigned_id', auth()->id());
             })
             ->latest()
             ->get();
