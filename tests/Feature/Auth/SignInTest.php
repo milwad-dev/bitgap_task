@@ -35,6 +35,16 @@ test('login user can not sign in', function () {
     $response->assertFound();
 });
 
+test('guest user can not sign in when passwords not match', function () {
+    $user = User::factory()->create(['password' => Hash::make('password')]);
+
+    $response = postJson(route('auth.sign-in'), [
+        'email' => $user->email,
+        'password' => 'password1',
+    ]);
+    $response->assertUnprocessable();
+});
+
 test('guest user can not sign in when the user is not exists before', function () {
     $response = postJson(route('auth.sign-in'), [
         'email' => 'milwad@gmail.com',

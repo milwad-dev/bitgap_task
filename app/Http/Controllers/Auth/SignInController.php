@@ -23,7 +23,7 @@ class SignInController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Invalid credentials',
-            ], 401);
+            ], 422);
         }
 
         $token = $user->createToken('token')->plainTextToken;
