@@ -2,6 +2,7 @@
 
 use App\Models\Permission;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\postJson;
@@ -24,7 +25,7 @@ test('login user can store new role', function () {
 test('guest user can not store new role', function () {
     $response = postJson(route('role-permissions.store', [
         'name' => 'NEW ROLE',
-        'permissions' => [1, 2]
+        'permissions' => [1, 2],
     ]));
     $response->assertUnauthorized();
 
