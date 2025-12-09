@@ -15,6 +15,8 @@ It demonstrates clean architecture, API design, SOLID principles, testing struct
 - Role-Permission system
 - Cache with Redis
 - Swagger
+- Tests CI
+- Laravel Pint
 
 ---
 
