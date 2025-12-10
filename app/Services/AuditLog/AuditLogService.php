@@ -2,7 +2,7 @@
 
 namespace App\Services\AuditLog;
 
-use App\Models\AuditLog;
+use App\Jobs\AuditLogStoreQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class AuditLogService
@@ -10,15 +10,10 @@ class AuditLogService
     /**
      * Store new audit log.
      */
-    public function store(string $action, ?Model $model = null, ?string $changes = null): AuditLog
+    public function store(string $action, ?Model $model = null, ?string $changes = null): bool
     {
-        return AuditLog::query()->create([
-            'user_id' => auth()->id(),
-            'action' => $action,
-            'ip_address' => request()->ip(),
-            'model' => $model ? get_class($model) : null,
-            'model_id' => $model?->getKey(),
-            'changes' => $changes,
-        ]);
+        AuditLogStoreQueue::dispatch($action, $model, $changes);
+
+        return true;
     }
 }
