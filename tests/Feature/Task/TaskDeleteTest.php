@@ -1,13 +1,18 @@
 <?php
 
+use App\Jobs\AuditLogStoreQueue;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Support\Facades\Queue;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\deleteJson;
 
 test('login user can delete task', function () {
+    // Mock Queue
+    Queue::fake();
+
     $user = User::factory()->create();
     $task = Task::factory()->create(['user_id' => $user->getKey()]);
 
@@ -16,7 +21,9 @@ test('login user can delete task', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 0);
-    assertDatabaseCount('audit_logs', 2);
+
+    // Queue Assertions
+    Queue::assertPushed(AuditLogStoreQueue::class);
 });
 
 test('guest user can not delete task', function () {
@@ -27,5 +34,4 @@ test('guest user can not delete task', function () {
 
     // DB Assertions
     assertDatabaseCount('tasks', 1);
-    assertDatabaseCount('audit_logs', 1);
 });

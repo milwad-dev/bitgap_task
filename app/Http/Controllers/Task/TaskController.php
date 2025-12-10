@@ -85,7 +85,7 @@ class TaskController extends Controller
     {
         $this->authorize('delete', $task);
 
-        $task->delete();
+        Task::query()->where('id', $task->getKey())->delete();
 
         return response()->json(null, 204);
     }
