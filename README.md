@@ -25,7 +25,7 @@ It demonstrates clean architecture, API design, SOLID principles, testing struct
 
 - PHP 8.3
 - Composer  
-- PostgreSQL  
+- PostgreSQL 18
 - Docker (optional)  
 
 ---
